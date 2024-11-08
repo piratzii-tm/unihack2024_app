@@ -1,19 +1,11 @@
-import {StyleSheet, View, Text, Button} from "react-native";
+import { Text, Button} from "react-native";
+import {KContainer} from "../components";
 
 export function HomeScreen({navigation}) {
     return (
-        <View style={styles.container}>
+        <KContainer>
             <Text>Home Screen</Text>
             <Button title={"Go to story details"} onPress={() => navigation.navigate("StoryDetails")} />
-        </View>
+        </KContainer>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-})
