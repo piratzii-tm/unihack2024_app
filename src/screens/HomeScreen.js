@@ -1,11 +1,20 @@
-import { Text, Button} from "react-native";
-import {KContainer} from "../components";
+import { Text, StyleSheet } from "react-native";
+import { KContainer } from "../components";
 
-export function HomeScreen({navigation}) {
-    return (
-        <KContainer>
-            <Text>Home Screen</Text>
-            <Button title={"Go to story details"} onPress={() => navigation.navigate("StoryDetails")} />
-        </KContainer>
-    )
+export function HomeScreen() {
+  return (
+    <KContainer>
+      <Text style={styles.title}>My Stories</Text>
+    </KContainer>
+  );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 36,
+    color: "#6E6E6E",
+    fontFamily: "DM Sans",
+    alignSelf: "flex-start",
+    margin: 20,
+  },
+});

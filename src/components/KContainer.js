@@ -4,7 +4,7 @@ export const KContainer = ({children}) => {
     return(
         <SafeAreaView style = {{
                 flex: 1,
-                backgroundColor: '#fff',
+                backgroundColor: '#FFE4B5',
                 alignItems: 'center',
             }}>
             {children}
