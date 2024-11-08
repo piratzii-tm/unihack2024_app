@@ -8,21 +8,22 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const TabNavigator = () => {
     return (
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
             <Tab.Screen name="Home" component={HomeScreen} options={{
                 tabBarIcon: () => (
                     <FontAwesome name="home" size={25} color="black" />
-                )
+                ),
+
             }}/>
             <Tab.Screen name="Record" component={RecordScreen} options={{
                 tabBarIcon: () => (
                     <FontAwesome name="microphone" size={25} color="black" />
-                )
+                ),
             }}/>
             <Tab.Screen name="Settings" component={SettingsScreen} options={{
                 tabBarIcon: () => (
                     <FontAwesome name="cog" size={25} color="black" />
-                )
+                ),
             }}/>
         </Tab.Navigator>
     )
@@ -34,7 +35,7 @@ const Stack = createStackNavigator();
 export const Navigation = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Tabs" component={TabNavigator} />
                 <Stack.Screen name="StoryDetails" component={StoryDetailsScreen} />
             </Stack.Navigator>

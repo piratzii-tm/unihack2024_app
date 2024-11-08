@@ -1,9 +1,11 @@
 import {StyleSheet, View, Text, Button} from "react-native";
-import { Audio } from "expo-av";
-import React from "react";
-import * as Sharing from 'expo-sharing';
+import {KContainer} from "../components";
+import React from "react"
+import {Audio} from "expo-av";
+import * as Sharing from "expo-sharing";
 
 export function RecordScreen(){
+
     const [recording, setRecording] = React.useState();
     const [recordings, setRecordings] = React.useState([]);
     const [message, setMessage] = React.useState("");
@@ -66,23 +68,18 @@ export function RecordScreen(){
         });
     }
 
-    return (
-        <View style={styles.container}>
+    return(
+        <KContainer>
+            <Text>Record Screen</Text>
             <Button
                 title={recording ? 'Stop Recording' : 'Start Recording'}
                 onPress={recording ? stopRecording : startRecording} />
             {getRecordingLines()}
-        </View>
-    );
+        </KContainer>
+    )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     row: {
         flexDirection: 'row',
         alignItems: 'center',

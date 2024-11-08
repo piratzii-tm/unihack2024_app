@@ -1,20 +1,12 @@
 import {StyleSheet, View, Text} from "react-native";
+import {KContainer} from "../components";
 
 const StoryDetailsScreen = () => {
     return (
-        <View style={styles.container}>
+        <KContainer>
             <Text>Story Details Screen</Text>
-        </View>
+        </KContainer>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-})
 
 export default StoryDetailsScreen;
