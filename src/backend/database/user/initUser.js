@@ -1,5 +1,5 @@
 import { ref, set } from "firebase/database";
-import { db } from "../../firebase/config";
+import { db } from "../../config";
 import { collections } from "../constants";
 
 export const initUser = async ({ credentials }) =>

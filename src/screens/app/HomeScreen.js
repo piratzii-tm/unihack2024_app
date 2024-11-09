@@ -1,5 +1,7 @@
 import { Text, Button, StyleSheet, ScrollView, View } from "react-native";
 import { KContainer } from "../../components";
+import { logout } from "../../backend";
+import { initStory } from "../../backend/database/stories/initStory";
 import { TextFont } from "../../constants/themes";
 import StoryCard from "../../components/StoryCard";
 
@@ -22,6 +24,7 @@ export function HomeScreen({ navigation }) {
         title={"Go to story details"}
         onPress={() => navigation.navigate("StoryDetails")}
       />
+      <Button title={"Scan scenes"} onPress={() => initStory()} />
     </KContainer>
   );
 }
