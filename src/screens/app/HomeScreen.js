@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { KContainer } from "../../components";
 import { logout } from "../../backend";
@@ -12,6 +13,10 @@ import { initStory } from "../../backend/database/stories/initStory";
 import { TextFont } from "../../constants/themes";
 import StoryCard from "../../components/StoryCard";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { auth, db } from "../../backend/config";
+import { ref, onValue } from "firebase/database";
+import { collections } from "../../backend/database/constants";
 
 const MOCK_STORIES = [
   {
@@ -71,28 +76,61 @@ const MOCK_STORIES = [
 ];
 
 export function HomeScreen({ navigation }) {
+  const [stories, setStories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const usersRef = ref(db, collections.user);
+    onValue(usersRef, (userSnap) => {
+      if (userSnap.exists()) {
+        let data = userSnap.val();
+        data = data[auth.currentUser.uid];
+
+        const storiesRef = ref(db, collections.stories);
+        onValue(storiesRef, (storiesSnap) => {
+          const userStories = storiesSnap.val();
+
+          const aux = Object.keys(userStories).map((el) => {
+            if ((data.stories.includes(el), el, data.stories)) {
+              return userStories[el];
+            }
+          });
+          const unique = aux.filter(
+            (value, index, array) => array.indexOf(value) === index,
+          );
+          setStories(unique);
+          setIsLoading(false);
+        });
+      }
+    });
+  }, [auth]);
+
   return (
     <KContainer>
       <Text style={[TextFont.Text, styles.title]}>My stories</Text>
       <View style={styles.storiesContainer}>
-        {MOCK_STORIES.map((story, index) => (
-          <StoryCard
-            key={index}
-            story={story}
-            onPress={() =>
-              navigation.navigate("StoryDetails", {
-                name: story.name,
-                images: story.images,
-                data: MOCK_STORIES,
-              })
-            }
-          />
-        ))}
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          stories?.map((story, index) => (
+            <StoryCard
+              key={index}
+              story={story}
+              onPress={() =>
+                navigation.navigate("StoryDetails", {
+                  name: story.title,
+                  images: story?.frames?.map((frame) => {
+                    console.log("AICI");
+                    console.log(frame.link);
+                    return frame.link;
+                  }),
+                  data: story.frames,
+                })
+              }
+            />
+          ))
+        )}
       </View>
-      <Button
-        title={"Go to story details"}
-        onPress={() => navigation.navigate("StoryDetails")}
-      />
       <Button
         title={"Scan scenes"}
         onPress={async () => {
