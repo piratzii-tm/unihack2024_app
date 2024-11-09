@@ -27,6 +27,7 @@
     "expo-splash-screen": "^0.27.6",
     "expo-status-bar": "~1.12.1",
     "firebase": "^11.0.1",
+    "pod-install": "^0.2.2",
     "openai": "^4.71.1",
     "prettier": "^3.3.3",
     "react": "18.2.0",
