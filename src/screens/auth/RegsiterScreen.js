@@ -1,6 +1,6 @@
 import { Text, Button } from "react-native";
 import { KContainer } from "../../components";
-import { register } from "../../backend/firebase/auth/register";
+import { register } from "../../backend/auth/register";
 
 export function RegisterScreen({ navigation }) {
   return (

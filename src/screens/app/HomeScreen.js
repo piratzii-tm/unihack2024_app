@@ -1,6 +1,7 @@
 import { Text, Button } from "react-native";
 import { KContainer } from "../../components";
-import { logout } from "../../backend/firebase/auth/logout";
+import { logout } from "../../backend";
+import { initStory } from "../../backend/database/stories/initStory";
 
 export function HomeScreen({ navigation }) {
   return (
@@ -11,6 +12,7 @@ export function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate("StoryDetails")}
       />
       <Button title={"Logout"} onPress={logout} />
+      <Button title={"Scan scenes"} onPress={() => initStory()} />
     </KContainer>
   );
 }
