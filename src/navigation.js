@@ -13,7 +13,7 @@ import { createStackNavigator } from "@react-navigation/native/src/__stubs__/cre
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
-import { auth } from "./backend/firebase/config";
+import { auth } from "./backend/config";
 
 const TabNavigator = () => {
   return (
