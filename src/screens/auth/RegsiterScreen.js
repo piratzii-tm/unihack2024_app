@@ -10,9 +10,9 @@ export function RegisterScreen({ navigation }) {
         title={"Register"}
         onPress={() =>
           register({
-            email: "iulian1@test.test",
+            email: "stefan@test.test",
             password: "123456",
-            username: "poe",
+            username: "birsi",
           })
         }
       />
