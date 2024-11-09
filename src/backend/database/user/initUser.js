@@ -5,5 +5,5 @@ import { collections } from "../constants";
 export const initUser = async ({ credentials }) =>
   await set(ref(db, `${collections.user}${credentials.user.uid}`), {
     email: credentials.user.email,
-    stories: ["IGNORE"],
+    stories: ["D16sZZkL9hMbcsdh4kMD"],
   }).catch(console.log);

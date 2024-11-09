@@ -11,11 +11,11 @@ const prompt = `
     - the starting of scene represented by the number of seconds passed from the start (example 120, representing 120 seconds from the start)
     - the scene description you've created
     The scenes should be generated to be displayed max 45 and minimum 30 seconds on the screen. Generate scenes to handle all the audio and the scene to be max 45 seconds.
-    The scenes should handle the entire audio. Generate scenes for the entire audio.
-    The output needs to be used as an object, so return it as described below.
+    Generate scenes for the entire audio, an audio has aprox 3 minutes.
+    The output should write the number of seconds and then the @ sign and then the scene description and then an @ sign and so on for all the number of seconds and all the scenes
   Output example:
-    Below is described how the output should look. Remember, it will later be used to create a JSON object, so return it as a string that can be used in a JSON.stringify()
-    [{startingTime: "0", description: "Flowers, trees and stuff"},{startingTime: "60", description: "Sunset over a lake"}]
+    Below is described how the output should look.
+    0@rocky stone, flowers@30@trees, clouds
 `;
 
 export const handleSceneGeneration = async (filePath) => {
@@ -31,6 +31,8 @@ export const handleSceneGeneration = async (filePath) => {
     reader.onerror = reject;
     reader.readAsDataURL(blob); // Convert Blob to Base64
   });
+
+  console.log("Starting prompt");
 
   // Step 2: Prepare request for OpenAI API
   const response = await openai.chat.completions.create({
@@ -51,12 +53,25 @@ export const handleSceneGeneration = async (filePath) => {
     ],
   });
 
+  console.log(response);
+
   let result = response.choices[0].message.audio.transcript || "{}";
-  result = result.replace(/^```json\n/, "").replace(/\n```$/, "");
 
   console.log(result);
 
-  const sceneData = JSON.parse(result); // Convert to JavaScript object if needed
+  let listOfStrings = result.split("@");
+
+  console.log(listOfStrings);
+
+  let sceneData = [];
+
+  for (let i = 0; i < listOfStrings.length - 1; i = i + 2) {
+    console.log("add");
+    sceneData.push({
+      startingTime: listOfStrings[i],
+      description: listOfStrings[i + 1],
+    });
+  }
 
   console.log("SCENE_DATA", sceneData);
   return sceneData;

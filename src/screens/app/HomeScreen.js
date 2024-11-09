@@ -4,6 +4,7 @@ import { logout } from "../../backend";
 import { initStory } from "../../backend/database/stories/initStory";
 import { TextFont } from "../../constants/themes";
 import StoryCard from "../../components/StoryCard";
+import axios from "axios";
 
 const MOCK_STORIES = [
   { name: "Story 1", duration: 310 },
@@ -24,7 +25,18 @@ export function HomeScreen({ navigation }) {
         title={"Go to story details"}
         onPress={() => navigation.navigate("StoryDetails")}
       />
-      <Button title={"Scan scenes"} onPress={() => initStory()} />
+      <Button
+        title={"Scan scenes"}
+        onPress={async () => {
+          try {
+            await initStory();
+          } catch (err) {
+            if (axios.isAxiosError(err)) {
+              console.log(err.response);
+            }
+          }
+        }}
+      />
     </KContainer>
   );
 }
