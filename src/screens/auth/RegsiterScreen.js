@@ -1,13 +1,6 @@
-import {
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  View,
-} from "react-native";
+import { Text, Button } from "react-native";
 import { KContainer } from "../../components";
-import { register } from "../../backend/firebase/auth/register";
+import { register } from "../../backend";
 import { TextFont } from "../../constants/themes";
 import { OrSpacer } from "../../components/OrSpacer";
 import { useState } from "react";

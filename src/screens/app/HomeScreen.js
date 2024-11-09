@@ -7,8 +7,11 @@ import {
   Image,
 } from "react-native";
 import { KContainer } from "../../components";
+import { logout } from "../../backend";
+import { initStory } from "../../backend/database/stories/initStory";
 import { TextFont } from "../../constants/themes";
 import StoryCard from "../../components/StoryCard";
+import axios from "axios";
 
 const MOCK_STORIES = [
   {
@@ -86,6 +89,22 @@ export function HomeScreen({ navigation }) {
           />
         ))}
       </View>
+      <Button
+        title={"Go to story details"}
+        onPress={() => navigation.navigate("StoryDetails")}
+      />
+      <Button
+        title={"Scan scenes"}
+        onPress={async () => {
+          try {
+            await initStory();
+          } catch (err) {
+            if (axios.isAxiosError(err)) {
+              console.log(err.response);
+            }
+          }
+        }}
+      />
     </KContainer>
   );
 }

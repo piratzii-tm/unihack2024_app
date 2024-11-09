@@ -1,11 +1,10 @@
 import { Text, TextInput, TouchableOpacity, Image, View } from "react-native";
 import { KContainer } from "../../components";
 import { TextFont } from "../../constants/themes";
-import { register } from "../../backend/firebase/auth/register";
 import { OrSpacer } from "../../components/OrSpacer";
 import { styles } from "./RegsiterScreen";
 import { useState } from "react";
-import { login } from "../../backend/firebase/auth/login";
+import { login } from "../../backend";
 
 export function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
