@@ -15,9 +15,12 @@ import { Icon } from "react-native-vector-icons/Ionicons";
 import { KRecordButton } from "../../components/KRecordButton";
 import { KUploadButton } from "../../components/KUploadButton";
 import * as DocumentPicker from "expo-document-picker";
+import { addSound } from "../../backend/storage/addSound";
+import { getAuth } from "firebase/auth";
 
 export function RecordScreen() {
   const [recording, setRecording] = React.useState();
+  const [isRecording, setIsRecording] = React.useState(false);
   const [recordings, setRecordings] = React.useState([]);
   const [message, setMessage] = React.useState("");
 
@@ -34,7 +37,7 @@ export function RecordScreen() {
         const { recording } = await Audio.Recording.createAsync(
           Audio.RecordingOptionsPresets.RECORDING_OPTIONS_PRESET_HIGH_QUALITY,
         );
-
+        setIsRecording(true);
         setRecording(recording);
       } else {
         setMessage("Please grant permission to app to access microphone");
@@ -55,7 +58,24 @@ export function RecordScreen() {
       duration: getDurationFormatted(status.durationMillis),
       file: recording.getURI(),
     });
+    // Add voice recording to firebase
 
+    const user = getAuth().currentUser;
+    if (!user) {
+      Alert.alert("Error", "User is not authenticated");
+      return;
+    }
+    const userId = user.uid;
+
+    const fileName = recording.getURI()
+      ? recording.getURI().split("/").pop()
+      : "unknown_file";
+    const filepath = `sounds/${userId}-${fileName}`;
+
+    await addSound(recording.getURI(), filepath);
+    console.log("Voice recording added successfully in firebase");
+    Alert.alert("Voice recording", "Voice recording created successfully!");
+    setIsRecording(false);
     setRecordings(updatedRecordings);
   }
 
@@ -93,17 +113,23 @@ export function RecordScreen() {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: "audio/mpeg",
-      }).then((response) => {
+      }).then(async (response) => {
         if (response.canceled) {
           return;
         }
-        // output:
-        // {"assets": [{"mimeType": "audio/mpeg", "name": "three-little-pigs.mp3",
-        // "size": 3082031,
-        // "uri": "file:///data/user/0/host.exp.exponent/cache/DocumentPicker/4481124c-2136-46cc-8b95-e065b8239858.mp3"}], "canceled": false}
 
-        // add functionality to send to firebase
+        const { uri, name } = response.assets[0];
 
+        const user = getAuth().currentUser;
+        if (!user) {
+          Alert.alert("Error", "User is not authenticated");
+          return;
+        }
+        const userId = user.uid;
+
+        const filepath = `sounds/${userId}-${name}`;
+
+        await addSound(uri, filepath);
         console.log(response);
       });
     } catch (err) {
@@ -113,18 +139,30 @@ export function RecordScreen() {
 
   return (
     <KContainer>
-      <Text>Record your story</Text>
-      <View style={styles.recordButtonContainer}>
-        <KRecordButton
-          recording={recording}
-          startRecording={startRecording}
-          stopRecording={stopRecording}
-        ></KRecordButton>
-
-        <KUploadButton handleFileUpload={handleFileUpload} />
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Record your story</Text>
       </View>
 
-      {getRecordingLines()}
+      <KContainer style={styles.recordButtonContainer}>
+        {isRecording ? (
+          <KRecordButton
+            recording={recording}
+            startRecording={startRecording}
+            stopRecording={stopRecording}
+            style={styles.recordButtonContainerActive}
+          ></KRecordButton>
+        ) : (
+          <KRecordButton
+            recording={recording}
+            startRecording={startRecording}
+            stopRecording={stopRecording}
+            style={styles.recordButtonContainerInactive}
+          ></KRecordButton>
+        )}
+      </KContainer>
+      <View style={styles.uploadButtonContainer}>
+        <KUploadButton handleFileUpload={handleFileUpload} />
+      </View>
     </KContainer>
   );
 }
@@ -145,5 +183,36 @@ const styles = StyleSheet.create({
   recordButtonContainer: {
     paddingTop: 30,
     flex: 1 / 2,
+  },
+  uploadButtonContainer: { flex: 1 / 2 },
+  titleContainer: {
+    paddingTop: 50,
+    flex: 1 / 2,
+  },
+  title: {
+    alignSelf: "flex-start",
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#6E6E6E",
+    fontColor: "6E6E6E",
+  },
+
+  recordButtonContainerInactive: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFD1C1",
+    borderRadius: 80,
+    height: 150,
+    width: 150,
+  },
+  recordButtonContainerActive: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFD1C1",
+    borderRadius: 80,
+    borderWidth: 10,
+    borderColor: "#ebb3a0",
+    height: 150,
+    width: 150,
   },
 });
