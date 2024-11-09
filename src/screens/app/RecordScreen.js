@@ -1,8 +1,20 @@
-import { StyleSheet, View, Text, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  Pressable,
+  Alert,
+} from "react-native";
 import { KContainer } from "../../components";
-import React from "react";
+import React, { useState } from "react";
 import { Audio } from "expo-av";
 import * as Sharing from "expo-sharing";
+import { Icon } from "react-native-vector-icons/Ionicons";
+import { KRecordButton } from "../../components/KRecordButton";
+import { KUploadButton } from "../../components/KUploadButton";
+import * as DocumentPicker from "expo-document-picker";
 
 export function RecordScreen() {
   const [recording, setRecording] = React.useState();
@@ -77,13 +89,41 @@ export function RecordScreen() {
     });
   }
 
+  async function handleFileUpload() {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "audio/mpeg",
+      }).then((response) => {
+        if (response.canceled) {
+          return;
+        }
+        // output:
+        // {"assets": [{"mimeType": "audio/mpeg", "name": "three-little-pigs.mp3",
+        // "size": 3082031,
+        // "uri": "file:///data/user/0/host.exp.exponent/cache/DocumentPicker/4481124c-2136-46cc-8b95-e065b8239858.mp3"}], "canceled": false}
+
+        // add functionality to send to firebase
+
+        console.log(response);
+      });
+    } catch (err) {
+      console.error("error:", err);
+    }
+  }
+
   return (
     <KContainer>
-      <Text>Record Screen</Text>
-      <Button
-        title={recording ? "Stop Recording" : "Start Recording"}
-        onPress={recording ? stopRecording : startRecording}
-      />
+      <Text>Record your story</Text>
+      <View style={styles.recordButtonContainer}>
+        <KRecordButton
+          recording={recording}
+          startRecording={startRecording}
+          stopRecording={stopRecording}
+        ></KRecordButton>
+
+        <KUploadButton handleFileUpload={handleFileUpload} />
+      </View>
+
       {getRecordingLines()}
     </KContainer>
   );
@@ -101,5 +141,9 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 16,
+  },
+  recordButtonContainer: {
+    paddingTop: 30,
+    flex: 1 / 2,
   },
 });
