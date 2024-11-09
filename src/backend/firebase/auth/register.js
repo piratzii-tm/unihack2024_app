@@ -1,8 +1,13 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config";
-import { createUser } from "../../mongoDB";
+import { initUser } from "../../database";
 
-export const register = ({ email, password, username }) =>
-  createUserWithEmailAndPassword(auth, email, password).then((credentials) => {
-    return createUser({ uid: credentials.user.uid, username });
-  });
+export const register = async ({ email, password }) => {
+  const credentials = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  )
+    .then((credentials) => initUser({ credentials }))
+    .catch(console.log);
+};

@@ -1,10 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_I9Pk1hKu8x-eZGMkfAgp6F5dRfvMHU0",
   authDomain: "voicenotes-82070.firebaseapp.com",
+  databaseURL:
+    "https://voicenotes-82070-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "voicenotes-82070",
   storageBucket: "voicenotes-82070.firebasestorage.app",
   messagingSenderId: "626240339689",
@@ -16,3 +19,5 @@ const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
+
+export const db = getDatabase(app);
