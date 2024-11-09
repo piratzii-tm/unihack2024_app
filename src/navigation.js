@@ -1,11 +1,19 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, RecordScreen, SettingsScreen } from "./screens/";
-import StoryDetailsScreen from "./screens/StoryDetailsScreen";
+import {
+  HomeScreen,
+  RecordScreen,
+  RegisterScreen,
+  SettingsScreen,
+  LoginScreen,
+} from "./screens/";
+import StoryDetailsScreen from "./screens/app/StoryDetailsScreen";
 import { createStackNavigator } from "@react-navigation/native/src/__stubs__/createStackNavigator";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
+import { auth } from "./backend/firebase/config";
 
 const TabNavigator = () => {
   return (
@@ -73,17 +81,6 @@ const TabNavigator = () => {
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export const Navigation = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Tabs" component={TabNavigator} />
-        <Stack.Screen name="StoryDetails" component={StoryDetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
@@ -116,3 +113,32 @@ const focusedStyle = StyleSheet.create({
     color: "#FFBAA3",
   },
 });
+
+const AppStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Tabs" component={TabNavigator} />
+    <Stack.Screen name="StoryDetails" component={StoryDetailsScreen} />
+  </Stack.Navigator>
+);
+
+const AuthStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name={"RegisterScreen"} component={RegisterScreen} />
+    <Stack.Screen name={"LoginScreen"} component={LoginScreen} />
+  </Stack.Navigator>
+);
+
+export const Navigation = () => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setIsLogged(user !== null);
+    });
+  }, []);
+
+  return (
+    <NavigationContainer>
+      {isLogged ? <AppStack /> : <AuthStack />}
+    </NavigationContainer>
+  );
+};
