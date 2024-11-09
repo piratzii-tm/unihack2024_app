@@ -17,6 +17,7 @@ import { KUploadButton } from "../../components/KUploadButton";
 import * as DocumentPicker from "expo-document-picker";
 import { addSound } from "../../backend/storage/addSound";
 import { getAuth } from "firebase/auth";
+import { initStory } from "../../backend/database/stories/initStory";
 
 export function RecordScreen() {
   const [recording, setRecording] = React.useState();
@@ -72,7 +73,9 @@ export function RecordScreen() {
       : "unknown_file";
     const filepath = `sounds/${userId}-${fileName}`;
 
-    await addSound(recording.getURI(), filepath);
+    await addSound(recording.getURI(), filepath).then(() =>
+      initStory(filepath, fileName, status.durationMillis / 1000),
+    );
     console.log("Voice recording added successfully in firebase");
     Alert.alert("Voice recording", "Voice recording created successfully!");
     setIsRecording(false);
@@ -118,7 +121,7 @@ export function RecordScreen() {
           return;
         }
 
-        const { uri, name } = response.assets[0];
+        const { uri, name, size } = response.assets[0];
 
         const user = getAuth().currentUser;
         if (!user) {
@@ -129,7 +132,9 @@ export function RecordScreen() {
 
         const filepath = `sounds/${userId}-${name}`;
 
-        await addSound(uri, filepath);
+        await addSound(uri, filepath).then(() =>
+          initStory(filepath, name, size),
+        );
         console.log(response);
       });
     } catch (err) {

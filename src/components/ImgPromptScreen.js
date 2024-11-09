@@ -16,17 +16,16 @@ const ImgPromptScreen = ({ item, image, index }) => {
     <View style={[styles.container, { width }]}>
       <Image
         style={styles.image}
-        source={{ uri: image[index].img }}
+        source={{ uri: image[index] }}
         height={width / 2}
       />
       <TextInput
         style={styles.promptContainer}
+        value={item.prompt}
         placeholder={"Prompt goes here..."}
         placeholderTextColor={"#B4ABAB"}
         multiline={true}
-      >
-        {image[index].prompt}
-      </TextInput>
+      />
       <TouchableOpacity onPress={() => null} style={styles.regenerateBtn}>
         <Text style={[TextFont.Text, styles.regenerateBtnTxt]}>Regenerate</Text>
       </TouchableOpacity>
@@ -49,9 +48,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "90%",
     marginTop: 15,
-    height: "17%",
     borderRadius: 15,
-    padding: 10,
+    padding: 12,
     fontFamily: "DM Sans",
   },
   regenerateBtn: {

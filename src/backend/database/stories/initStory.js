@@ -5,13 +5,17 @@ import { collections } from "../constants";
 import { handleSceneGeneration } from "../../../ai/openai";
 import { sleep } from "openai/core";
 import axios from "axios";
-import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref as storageRef,
+  uploadBytes,
+} from "firebase/storage";
+import { getSound } from "../../storage";
 
-export const initStory = async (audioFile) => {
-  const audioFilePath = "sounds/epilouge.mp3";
-
+export const initStory = async (audioFile, title, duration) => {
   // Step 2: Generate transcript using AI with the uploaded audio file's path
-  let transcriptGenerated = await handleSceneGeneration(audioFilePath);
+  let transcriptGenerated = await handleSceneGeneration(audioFile);
 
   // Step 3: Save transcript and user data to Firestore
   try {
@@ -64,10 +68,14 @@ export const initStory = async (audioFile) => {
 
     console.log(frames);
 
+    const audio = await getSound(audioFile);
+
     await set(ref(db, `${collections.stories}/${storyDoc.id}`), {
       id: storyDoc.id,
-      audio: "",
+      audio,
       frames,
+      title,
+      duration,
     });
 
     console.log("Frames data successfully saved to Realtime Database");

@@ -13,6 +13,8 @@ import ImgPromptScreen from "../../components/ImgPromptScreen";
 const StoryDetailsScreen = ({ navigation, route }) => {
   const { name, images, data } = route.params;
 
+  console.log(data);
+
   const { width } = useWindowDimensions();
 
   return (
