@@ -1,4 +1,12 @@
-import { Text, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+} from "react-native";
 import { KContainer } from "../../components";
 import { register } from "../../backend";
 import { TextFont } from "../../constants/themes";
