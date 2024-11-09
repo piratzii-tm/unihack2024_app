@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { TextFont } from "../constants/themes";
 import * as React from "react";
 import CustomIcon from "./CustomIcon";
@@ -17,9 +17,9 @@ const timeConverter = (duration) => {
   return `${h}:${min}:${sec}`;
 };
 
-const StoryCard = ({ story }) => {
+const StoryCard = ({ story, onPress }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.iconContainer}>
         <CustomIcon style={styles.icon} />
       </View>
@@ -29,7 +29,7 @@ const StoryCard = ({ story }) => {
           {timeConverter(story.duration)}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
