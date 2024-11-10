@@ -4,7 +4,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 export const KUploadButton = ({ handleFileUpload }) => {
   return (
     <TouchableOpacity onPress={handleFileUpload} style={[styles.button]}>
-      <FontAwesome name="file" size={20} color={"#6E6E6E"} />
+      <FontAwesome name="file" size={20} color={"#FFD1C1"} />
       <Text style={styles.textButton}>Upload file</Text>
     </TouchableOpacity>
   );
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
 
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",

@@ -1,12 +1,23 @@
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { KContainer } from "../../components";
-import { logout } from "../../backend";
+import { TextFont } from "../../constants/themes";
+import LogoutBtn from "../../components/LogoutBtn";
 
 export function SettingsScreen() {
   return (
     <KContainer>
-      <Text>Settings Screen</Text>
-      <Button title={"Logout"} onPress={logout} />
+      <Text style={[TextFont.Text, styles.title]}>Settings</Text>
+      <LogoutBtn />
     </KContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    alignSelf: "flex-start",
+    fontSize: 32,
+    color: "#6E6E6E",
+    marginTop: 35,
+    marginLeft: 30,
+  },
+});

@@ -6,6 +6,7 @@ import {
   View,
   Image,
   ActivityIndicator,
+  ImageBackground,
 } from "react-native";
 import { KContainer } from "../../components";
 import { logout } from "../../backend";
