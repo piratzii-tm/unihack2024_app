@@ -9,6 +9,9 @@ export const addIdToUserArray = async (userId, newId) => {
   let currentUser = snapshot.val();
 
   currentUser.stories.push(newId);
+  currentUser.progress.push({
+    [newId]: 0,
+  });
 
   await set(userRef, currentUser);
 };

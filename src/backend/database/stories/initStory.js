@@ -41,6 +41,8 @@ export const initStory = async (audioFile, title, duration) => {
         {
           prompt: element.description,
           skybox_style_id: 93,
+          negative_text:
+            "nudity, sexual content, graphic violence, self-harm, animal cruelty, horror elements",
         },
       );
 
@@ -64,6 +66,7 @@ export const initStory = async (audioFile, title, duration) => {
         startingTime: element.startingTime,
         prompt: element.description,
         link: response.data.request.file_url,
+        thumbnail: response.data.request.thumb_url,
       });
     }
 
