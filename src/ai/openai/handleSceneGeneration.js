@@ -5,7 +5,7 @@ const prompt = `
   Context: 
     You will receive a story that will include different scenes that will later be used to generate images. 
     The scenes need to be from the given story, without too much added things.
-    The description of the scene should detail a 360 scene of the image of scenario, be concise, 75 words enumerated, give the words comma separated
+    The description of the scene should detail a 360 scene of the image of scenario, be concise, 75 words enumerated but max 400 characters in total including spaces and commas, give the words comma separated
   Output:
     The output needs to contain the following items:
     - the starting of scene represented by the number of seconds passed from the start (example 120, representing 120 seconds from the start)

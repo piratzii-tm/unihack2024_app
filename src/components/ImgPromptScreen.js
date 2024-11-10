@@ -17,7 +17,9 @@ const ImgPromptScreen = ({ item, image, index }) => {
     <View style={[styles.container, { width }]}>
       <Image
         style={styles.image}
-        source={{ uri: image[index] }}
+        source={{
+          uri: image[index],
+        }}
         height={width / 2}
       />
       <TextInput
