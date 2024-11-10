@@ -12,6 +12,7 @@ import { register } from "../../backend";
 import { TextFont } from "../../constants/themes";
 import { OrSpacer } from "../../components/OrSpacer";
 import { useState } from "react";
+import LogoIcon from "../../components/LogoIcon";
 
 export function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ export function RegisterScreen({ navigation }) {
 
   return (
     <KContainer>
+      <LogoIcon />
       <Text style={styles.title}>Create an account</Text>
       <TextInput
         style={[styles.registerInput, TextFont.Text]}
@@ -89,7 +91,6 @@ export const styles = StyleSheet.create({
     fontFamily: "DM Sans",
     fontSize: 32,
     color: "#6E6E6E",
-    marginTop: 150,
     marginBottom: 30,
   },
   registerInput: {

@@ -5,6 +5,7 @@ import { OrSpacer } from "../../components/OrSpacer";
 import { styles } from "./RegsiterScreen";
 import { useState } from "react";
 import { login } from "../../backend";
+import LogoIcon from "../../components/LogoIcon";
 
 export function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ export function LoginScreen({ navigation }) {
 
   return (
     <KContainer>
+      <LogoIcon />
       <Text style={styles.title}>Welcome back!</Text>
       <TextInput
         style={[styles.registerInput, TextFont.Text]}
