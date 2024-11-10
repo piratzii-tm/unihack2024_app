@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   infoText: {
     color: "#6E6E6E",
     marginLeft: 10,
+    marginRight: 10,
   },
 });
 

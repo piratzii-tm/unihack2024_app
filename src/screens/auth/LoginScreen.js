@@ -21,6 +21,7 @@ export function LoginScreen({ navigation }) {
         placeholderTextColor="#B4ABAB"
         keyboardType={"email-address"}
         onChangeText={setEmail}
+        autoCapitalize={"none"}
       />
       <TextInput
         style={[styles.registerInput, TextFont.Text]}
