@@ -9,11 +9,10 @@ import { KContainer } from "../../components";
 import { TextFont } from "../../constants/themes";
 import BackButton from "../../components/BackButton";
 import ImgPromptScreen from "../../components/ImgPromptScreen";
+import InfoContainer from "../../components/InfoContainer";
 
 const StoryDetailsScreen = ({ navigation, route }) => {
   const { name, images, data } = route.params;
-
-  console.log(data);
 
   const { width } = useWindowDimensions();
 
@@ -21,7 +20,9 @@ const StoryDetailsScreen = ({ navigation, route }) => {
     <KContainer>
       <BackButton navigation={navigation} />
       <Text style={[TextFont.Text, styles.title]}>{name}</Text>
-
+      <InfoContainer
+        text={"These are the scenes that you have generated up until now."}
+      />
       <FlatList
         data={data}
         renderItem={({ item, index }) => (
