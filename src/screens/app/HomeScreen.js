@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import {
   Text,
   Button,
@@ -9,9 +8,6 @@ import {
   ActivityIndicator,
   ImageBackground,
 } from "react-native";
-=======
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
->>>>>>> Stashed changes
 import { KContainer } from "../../components";
 import { TextFont } from "../../constants/themes";
 import StoryCard from "../../components/StoryCard";

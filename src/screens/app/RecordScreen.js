@@ -150,32 +150,6 @@ export function RecordScreen() {
 
   return (
     <KContainer>
-<<<<<<< Updated upstream
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Record your story</Text>
-      </View>
-
-      <View style={styles.recordButtonContainer}>
-        {isRecording ? (
-          <KRecordButton
-            recording={recording}
-            startRecording={startRecording}
-            stopRecording={stopRecording}
-            style={styles.recordButtonContainerActive}
-          ></KRecordButton>
-        ) : (
-          <KRecordButton
-            recording={recording}
-            startRecording={startRecording}
-            stopRecording={stopRecording}
-            style={styles.recordButtonContainerInactive}
-          ></KRecordButton>
-        )}
-      </View>
-      <View style={styles.uploadButtonContainer}>
-        <KUploadButton handleFileUpload={handleFileUpload} />
-      </View>
-=======
       {isGenerating && (
         <>
           <View style={styles.titleContainer}>
@@ -195,7 +169,7 @@ export function RecordScreen() {
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Record your story</Text>
           </View>
-          <KContainer style={styles.recordButtonContainer}>
+          <View style={styles.recordButtonContainer}>
             {isRecording ? (
               <KRecordButton
                 recording={recording}
@@ -211,13 +185,12 @@ export function RecordScreen() {
                 style={styles.recordButtonContainerInactive}
               ></KRecordButton>
             )}
-          </KContainer>
+          </View>
           <View style={styles.uploadButtonContainer}>
             <KUploadButton handleFileUpload={handleFileUpload} />
           </View>
         </>
       )}
->>>>>>> Stashed changes
     </KContainer>
   );
 }
