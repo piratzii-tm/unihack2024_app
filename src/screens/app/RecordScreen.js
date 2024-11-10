@@ -148,7 +148,7 @@ export function RecordScreen() {
         <Text style={styles.title}>Record your story</Text>
       </View>
 
-      <KContainer style={styles.recordButtonContainer}>
+      <View style={styles.recordButtonContainer}>
         {isRecording ? (
           <KRecordButton
             recording={recording}
@@ -164,7 +164,7 @@ export function RecordScreen() {
             style={styles.recordButtonContainerInactive}
           ></KRecordButton>
         )}
-      </KContainer>
+      </View>
       <View style={styles.uploadButtonContainer}>
         <KUploadButton handleFileUpload={handleFileUpload} />
       </View>
