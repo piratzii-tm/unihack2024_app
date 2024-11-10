@@ -12,6 +12,7 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { getSound } from "../../storage";
+import { addIdToUserArray } from "../user/addToUserArray";
 
 export const initStory = async (audioFile, title, duration) => {
   // Step 2: Generate transcript using AI with the uploaded audio file's path
@@ -76,7 +77,7 @@ export const initStory = async (audioFile, title, duration) => {
       frames,
       title,
       duration,
-    });
+    }).then(() => addIdToUserArray(auth.currentUser.uid, storyDoc.id));
 
     console.log("Frames data successfully saved to Realtime Database");
   } catch (error) {

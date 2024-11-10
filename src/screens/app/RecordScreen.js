@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Pressable,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { KContainer } from "../../components";
 import React, { useState } from "react";
@@ -24,6 +25,7 @@ export function RecordScreen() {
   const [isRecording, setIsRecording] = React.useState(false);
   const [recordings, setRecordings] = React.useState([]);
   const [message, setMessage] = React.useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   async function startRecording() {
     try {
@@ -73,9 +75,11 @@ export function RecordScreen() {
       : "unknown_file";
     const filepath = `sounds/${userId}-${fileName}`;
 
-    await addSound(recording.getURI(), filepath).then(() =>
-      initStory(filepath, fileName, status.durationMillis / 1000),
-    );
+    setIsGenerating(true);
+    await addSound(recording.getURI(), filepath);
+    await initStory(filepath, fileName, status.durationMillis / 1000);
+    setIsGenerating(false);
+
     console.log("Voice recording added successfully in firebase");
     Alert.alert("Voice recording", "Voice recording created successfully!");
     setIsRecording(false);
@@ -132,9 +136,11 @@ export function RecordScreen() {
 
         const filepath = `sounds/${userId}-${name}`;
 
-        await addSound(uri, filepath).then(() =>
-          initStory(filepath, name, size),
+        setIsGenerating(true);
+        await addSound(uri, filepath).then(
+          () => initStory(filepath, name, 250), //TODO Maybe not hardcoded
         );
+        setIsGenerating(false);
         console.log(response);
       });
     } catch (err) {
@@ -144,30 +150,47 @@ export function RecordScreen() {
 
   return (
     <KContainer>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Record your story</Text>
-      </View>
-
-      <View style={styles.recordButtonContainer}>
-        {isRecording ? (
-          <KRecordButton
-            recording={recording}
-            startRecording={startRecording}
-            stopRecording={stopRecording}
-            style={styles.recordButtonContainerActive}
-          ></KRecordButton>
-        ) : (
-          <KRecordButton
-            recording={recording}
-            startRecording={startRecording}
-            stopRecording={stopRecording}
-            style={styles.recordButtonContainerInactive}
-          ></KRecordButton>
-        )}
-      </View>
-      <View style={styles.uploadButtonContainer}>
-        <KUploadButton handleFileUpload={handleFileUpload} />
-      </View>
+      {isGenerating && (
+        <>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Your story is generating</Text>
+          </View>
+          <ActivityIndicator
+            size={"large"}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
+        </>
+      )}
+      {!isGenerating && (
+        <>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Record your story</Text>
+          </View>
+          <View style={styles.recordButtonContainer}>
+            {isRecording ? (
+              <KRecordButton
+                recording={recording}
+                startRecording={startRecording}
+                stopRecording={stopRecording}
+                style={styles.recordButtonContainerActive}
+              ></KRecordButton>
+            ) : (
+              <KRecordButton
+                recording={recording}
+                startRecording={startRecording}
+                stopRecording={stopRecording}
+                style={styles.recordButtonContainerInactive}
+              ></KRecordButton>
+            )}
+          </View>
+          <View style={styles.uploadButtonContainer}>
+            <KUploadButton handleFileUpload={handleFileUpload} />
+          </View>
+        </>
+      )}
     </KContainer>
   );
 }

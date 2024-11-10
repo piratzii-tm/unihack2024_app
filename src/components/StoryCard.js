@@ -18,15 +18,14 @@ const timeConverter = (duration) => {
 };
 
 const StoryCard = ({ story, onPress }) => {
-  console.log(story.title);
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.iconContainer}>
         <CustomIcon style={styles.icon} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={[TextFont.Text, styles.name]}>{story.title}</Text>
-        <Text style={[TextFont.Text, styles.duration]}>
+        <Text style={[TextFont.Text, styles.name]}>{story?.title}</Text>
+        <Text style={[TextFont.Text, styles?.duration]}>
           {timeConverter(story.duration)}
         </Text>
       </View>
@@ -46,6 +45,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     color: "#6E6E6E",
+    flexWrap: "wrap",
   },
   duration: {
     fontSize: 16,
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   textContainer: {
     justifyContent: "center",
     gap: 5,
+    flex: 1,
   },
 });
 
