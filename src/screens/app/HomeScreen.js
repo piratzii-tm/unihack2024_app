@@ -1,13 +1,4 @@
-import {
-  Text,
-  Button,
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  ActivityIndicator,
-  ImageBackground,
-} from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { KContainer } from "../../components";
 import { TextFont } from "../../constants/themes";
 import StoryCard from "../../components/StoryCard";
@@ -19,6 +10,9 @@ import { collections } from "../../backend/database/constants";
 export function HomeScreen({ navigation }) {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState({});
+
+  console.log(auth.currentUser.email);
 
   useEffect(() => {
     const usersRef = ref(db, collections.user);
@@ -26,13 +20,15 @@ export function HomeScreen({ navigation }) {
       if (userSnap.exists()) {
         let data = userSnap.val();
         data = data[auth.currentUser.uid];
+        console.log(data.progress);
+        setUser(data);
 
         const storiesRef = ref(db, collections.stories);
         onValue(storiesRef, (storiesSnap) => {
           const userStories = storiesSnap.val();
 
-          const aux = Object.keys(userStories).map((el) => {
-            if (data.stories.includes(el)) {
+          const aux = Object.keys(userStories)?.map((el) => {
+            if (data?.stories.includes(el)) {
               return userStories[el];
             }
           });
@@ -46,13 +42,11 @@ export function HomeScreen({ navigation }) {
     });
   }, [auth]);
 
-  console.log(stories);
-
   return (
     <KContainer>
       <Text style={[TextFont.Text, styles.title]}>My stories</Text>
       <View style={styles.storiesContainer}>
-        {isLoading || stories.length === 0 ? (
+        {isLoading || stories?.length === 0 ? (
           <ActivityIndicator />
         ) : (
           stories?.map(
@@ -65,19 +59,22 @@ export function HomeScreen({ navigation }) {
                     navigation.navigate("StoryDetails", {
                       name: story.title,
                       images: story?.frames?.map((frame) => {
-                        console.log("AICI");
-                        console.log(frame.link);
-                        return frame.link;
+                        return frame.thumbnail;
                       }),
                       data: story.frames,
+                      lastViewed: Object.values(
+                        Object.values(user.progress).filter(
+                          (el) => Object.keys(el)[0] === story.id,
+                        )[0],
+                      )[0],
                     })
                   }
                 />
               ),
           )
         )}
-        {stories.length === 0 ||
-          (stories.length === 1 && stories.includes(undefined) && (
+        {stories?.length === 0 ||
+          (stories?.length === 1 && stories?.includes(undefined) && (
             <Text style={[TextFont.Text, { color: "gray" }]}>
               No stories yet
             </Text>

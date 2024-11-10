@@ -6,6 +6,7 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { TextFont } from "../constants/themes";
 
@@ -26,7 +27,15 @@ const ImgPromptScreen = ({ item, image, index }) => {
         placeholderTextColor={"#B4ABAB"}
         multiline={true}
       />
-      <TouchableOpacity onPress={() => null} style={styles.regenerateBtn}>
+      <TouchableOpacity
+        onPress={() =>
+          Alert.alert(
+            "Stay tuned",
+            "Your generation could take a couple of days",
+          )
+        }
+        style={styles.regenerateBtn}
+      >
         <Text style={[TextFont.Text, styles.regenerateBtnTxt]}>Regenerate</Text>
       </TouchableOpacity>
     </View>

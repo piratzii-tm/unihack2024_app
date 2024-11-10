@@ -6,4 +6,5 @@ export const initUser = async ({ credentials }) =>
   await set(ref(db, `${collections.user}${credentials.user.uid}`), {
     email: credentials.user.email,
     stories: ["IGNORE"],
+    progress: ["IGNORE"],
   }).catch(console.log);
