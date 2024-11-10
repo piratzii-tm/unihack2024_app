@@ -3,8 +3,6 @@ import {
   View,
   Text,
   Button,
-  TouchableOpacity,
-  Pressable,
   Alert,
   ActivityIndicator,
 } from "react-native";

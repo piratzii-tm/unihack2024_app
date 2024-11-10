@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   regenerateBtn: {
-    backgroundColor: "#ff8b60",
+    backgroundColor: "#FFD1C1",
     width: "80%",
     height: "8%",
     marginTop: 15,
