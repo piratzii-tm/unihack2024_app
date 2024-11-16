@@ -1,21 +1,48 @@
 # VaudioR
 
-### Register Screen
+> ### Hearing a story is cool, but being part of it is awesome.
 
-<img src = "assets/register.jpg" wdith = "362px" height="800px"/>
+### Auth Stack
 
-### Login Screen
+> You can use the app simple and effective by creating an account or using an already created one.
 
-<img src = "assets/login.jpg" wdith = "362px" height="800px"/>
+<div style="flex-direction:row;">
+  <img src="assets/register.jpg" height="660" width="300">
+  <img src="assets/login.jpg" height="660" width="300">
+</div>
 
-### Home Screen
+### Your stories, our prority
 
-<img src = "assets/home.jpg" wdith = "362px" height="800px"/>
+> On the home screen you can access all your stories and for each story you can recheck all the viewed scenes.
 
-### Record Screen
+<div style="flex-direction:row;">
+  <img src="assets/home.jpg" height="660" width="300">
+  <img src="assets/detailsone.PNG" height="660" width="300">
+  <img src="assets/all2.PNG" height="660" width="300">
+</div>
 
-<img src = "assets/record.jpg" wdith = "362px" height="800px"/>
+> If you are not able to see any scenes, don't panic, you did not watch them in the VR app.
 
-### Settings Screen
+<div style="flex-direction:row;">
+  <img src="assets/noscenes.PNG" height="660" width="300">
+  <img src="assets/spoiler.PNG" height="660" width="300">
+  <img src="assets/all1.PNG" height="660" width="300">
+</div>
 
-<img src = "assets/settings.jpg" wdith = "362px" height="800px"/>
+### Handle your stories
+
+> You can upload your favourite audiobooks or create your own stories, just select or record them and wait for the magic
+> to happen
+>
+
+<div style="flex-direction:row;">
+  <img src = "assets/record.jpg" height="660" width="300"/>
+  <img src="assets/listening.PNG" height="660" width="300">
+  <img src="assets/generating.PNG" height="660" width="300">
+</div>
+
+### Settings and instructions
+
+<div style="flex-direction:row;">
+  <img src = "assets/settings.jpg" height="660" width="300"/>
+</div>

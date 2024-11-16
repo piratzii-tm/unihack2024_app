@@ -6,7 +6,9 @@
         {
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
         }
-      ]
+      ],
+      "expo-asset",
+      "expo-font"
     ],
     "name": "UniHack6",
     "slug": "UniHack6",
